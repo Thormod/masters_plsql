@@ -13,12 +13,14 @@ BEGIN
 	SELECT TIEMPO_MEZCLA INTO v_tiempo_mezcla FROM VARIABLE;
 	SELECT TIEMPO_DE_SIMULACION INTO v_tiempo_de_simulacion FROM PARAMETRO;
 	SELECT TIEMPO_FINAL_DE_MEZCLA INTO v_tiempo_final_de_mezcla FROM PARAMETRO;
-	IF v_marca_de_tiempo='SIGA' AND v_tiempo<=v_tiempo_de_simulacion THEN
-		UPDATE VARIABLE SET TIEMPO=TIEMPO+1;
-		IF v_tiempo_mezcla<=v_tiempo_final_de_mezcla THEN
-			UPDATE VARIABLE SET TIEMPO_MEZCLA=TIEMPO_MEZCLA+1;
-		ELSE
-			UPDATE VARIABLE SET TIEMPO_MEZCLA=0;
+	IF v_marca_de_tiempo='SIGA' THEN
+		IF v_tiempo<=v_tiempo_de_simulacion THEN
+			UPDATE VARIABLE SET TIEMPO=TIEMPO+1;
+			IF v_tiempo_mezcla<=v_tiempo_final_de_mezcla THEN
+				UPDATE VARIABLE SET TIEMPO_MEZCLA=TIEMPO_MEZCLA+1;
+			ELSE
+				UPDATE VARIABLE SET TIEMPO_MEZCLA=0;
+			END IF;
 		END IF;
 	END IF;
 END;
